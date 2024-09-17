@@ -4,6 +4,7 @@
 <div class="form">
     <form [formGroup]="addUserForm" (ngSubmit)="onSubmit($event)">
         <div class="form-name">
+            <div>Name:</div>
             <input id="name" formControlName="name" placeholder="Input your name"/>
             <div class="validation-error" *ngIf="nameForm?.errors?.['required']">
                 name must be required
@@ -14,6 +15,7 @@
         </div>
         <br>
         <div class="form-email">
+            <div>Email:</div>
             <input id="email" formControlName="email" placeholder="Input your email"/>
             <div class="validation-error" *ngIf="emailForm?.errors?.['required']">
                 email must be required
@@ -24,6 +26,7 @@
         </div>
         <br>
         <div class="form-city">
+            <div>City:</div>
             <input id="city" formControlName="city" placeholder="Input your city"/>
             <div class="validation-error" *ngIf="cityForm?.errors?.['required']">
                 city must be required
@@ -31,6 +34,7 @@
         </div>
         <br>
         <div class="form-province">
+            <div>Province:</div>
             <input id="province" formControlName="province" placeholder="Input your province"/>
             <div class="validation-error" *ngIf="provinceForm?.errors?.['required']">
                 province must be required
@@ -38,6 +42,7 @@
         </div>
         <br>
         <div class="form-zip-code">
+            <div>Zip Code:</div>
             <input id="zipCode" type="number" formControlName="zipCode" placeholder="Input your zip code"/>
             <div class="validation-error" *ngIf="zipCodeForm?.errors?.['required']">
                 zip code must be required
