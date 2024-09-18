@@ -3,7 +3,6 @@ import { RouterOutlet } from '@angular/router';
 import { DataUser } from './app.entity';
 import { FormComponent } from "./form/form.component";
 import { TableComponent } from "./table/table.component";
-import { UserdataService } from './service/userdata.service';
 
 @Component({
   selector: 'app-root',
@@ -17,15 +16,36 @@ export class AppComponent implements OnInit{
   dataUser!: Array<DataUser>;
 
   constructor(
-    private userDataService: UserdataService
+    
   ){}
   
   ngOnInit(): void{
     this.title = 'test fif angular';
-    this.dataUser = this.userDataService.initData();
+    this.dataUser = [
+      {
+      name:  'John',
+      email: 'john@gmail.com',
+      address:
+        {
+          province: 'Banten',
+          city: 'Tangerang',
+          zipCode: 1
+        }
+      },
+      {
+        name:  'John',
+        email: 'john@gmail.com',
+        address:
+          {
+            province: 'Banten',
+            city: 'Tangerang',
+            zipCode: 1
+          }
+      },
+    ]
   }
 
   checkSubmit(event: any){
-    this.userDataService.pushData(event);
+    this.dataUser.push(event);
   }
 }
