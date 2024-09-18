@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { DataUser } from './app.entity';
-import { FormComponent } from "../form/form.component";
-import { TableComponent } from "../table/table.component";
+import { FormComponent } from "./form/form.component";
+import { TableComponent } from "./table/table.component";
 
 @Component({
   selector: 'app-root',
