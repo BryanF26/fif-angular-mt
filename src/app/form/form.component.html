@@ -2,7 +2,7 @@
     <h1>Form Input Table</h1>
 </div>
 <div class="form">
-    <form [formGroup]="addUserForm" (ngSubmit)="onSubmit($event)">
+    <form [formGroup]="addUserForm" (ngSubmit)="onSubmit()">
         <div class="form-name">
             <div>Name:</div>
             <input id="name" formControlName="name" placeholder="Input your name"/>
@@ -46,6 +46,14 @@
             <input id="zipCode" type="number" formControlName="zipCode" placeholder="Input your zip code"/>
             <div class="validation-error" *ngIf="zipCodeForm?.errors?.['required']">
                 zip code must be required
+            </div>
+        </div>
+        <br>
+        <div class="form-payment-deadline">
+            <div>Payment Deadline:</div>
+            <input id="paymentDeadline" type="date" formControlName="paymentDeadline" placeholder="Input your payment deadline"/>
+            <div class="validation-error" *ngIf="paymentDeadlineForm?.errors?.['required']">
+                payment deadline must be required
             </div>
         </div>
         <br>

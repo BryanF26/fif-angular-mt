@@ -22,10 +22,11 @@ export class FormComponent{
       city: new FormControl('', Validators.required),
       province: new FormControl('', Validators.required),
       zipCode: new FormControl(0, Validators.required),
+      paymentDeadline: new FormControl(new Date(), Validators.required),
     })
   }
 
-  onSubmit(event: any){
+  onSubmit(){
     this.dataUser = {
       name: this.addUserForm.get('name')?.value,
       email: this.addUserForm.get('email')?.value,
@@ -33,10 +34,11 @@ export class FormComponent{
         province: this.addUserForm.get('province')?.value,
         city: this.addUserForm.get('city')?.value,
         zipCode: this.addUserForm.get('zipCode')?.value
-      }
+      },
+      paymentDeadline: new Date(this.addUserForm.get('paymentDeadline')?.value),
+      isCompleted: false
     };
     this.submitButton.emit(this.dataUser);
-    console.log(this.addUserForm.value)
   }
 
   get nameForm(){
@@ -57,6 +59,10 @@ export class FormComponent{
 
   get zipCodeForm(){
     return this.addUserForm.get('zipCode');
+  }
+  
+  get paymentDeadlineForm(){
+    return this.addUserForm.get('paymentDeadline');
   }
   
 }
