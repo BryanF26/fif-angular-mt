@@ -1,15 +1,17 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { DataUser } from './app.model';
+import { DataUser } from './app.entity';
 import { CommonModule } from '@angular/common';
 import { ButtonComponent } from '../button/button.component';
 import { GenerateRandomIdService } from '../generate-random-id.service';
 import { FormControl, FormGroup, FormsModule, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ReservePipe } from './reverse.pipe';
+import { UserdataService } from './userdata.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule, ButtonComponent, FormsModule, ReactiveFormsModule],
+  imports: [RouterOutlet, CommonModule, ButtonComponent, FormsModule, ReactiveFormsModule, ReservePipe],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
@@ -23,9 +25,13 @@ export class AppComponent implements OnInit{
   name: string = "";
 
   addUserForm!: FormGroup;
+  isShown: boolean = false;
+  today = new Date();
+
 
   constructor(
-    private randomIdService: GenerateRandomIdService 
+    private randomIdService: GenerateRandomIdService,
+    private userDataService: UserdataService
   ){
     this.randomId = this.randomIdService.generateId();
     this.addUserForm = new FormGroup({
@@ -44,23 +50,7 @@ export class AppComponent implements OnInit{
   
   ngOnInit(): void{
     this.title = 'test fif angular';
-    this.dataUser = {
-      name:  'John',
-      age:  30,
-      address: [
-        {
-          zipcode: 1,
-          province: 'Banten',
-          city: 'Tangerang',
-          district:  'Tangerang Selatan'
-        },
-        {
-          province: 'DKI Jakarta',
-          city: 'Jakarta',
-          district:  'Jakarta Selatan'
-        }
-      ]
-    }
+    this.dataUser = this.userDataService.getUser()
   }
 
   eventFromParent(event: any){
@@ -78,6 +68,7 @@ export class AppComponent implements OnInit{
 
   onSubmit(){
     console.log(this.addUserForm.value)
+    this.isShown = !this.isShown;
   }
 
   get nameForm(){
@@ -87,4 +78,5 @@ export class AppComponent implements OnInit{
   get phoneNumberForm(){
     return this.addUserForm.get('phoneNumber');
   }
+
 }

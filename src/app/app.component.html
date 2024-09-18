@@ -1,40 +1,27 @@
-<div class="container">
-  <h2 class="title" [style]="{color: fontColor}">{{title}}</h2>
-  <p class="desc">{{dataUser.name}} {{dataUser.address[0].province}}</p>
-  <div class="address" *ngFor="let address of dataUser.address">
-    {{address.city}}
-    {{address.district}}
-    {{address.province}}
-  </div>
-  {{randomId}}
-  <br>
-  <input placeholder="enter your name" [(ngModel)]="name">
-  <input placeholder="enter your name" (keyup)="eventFromParent3($event)">
-  <div class="name">
-    Hasil dari input: {{name}}
-  </div>
-  <app-button [buttonLabel]="labelButton1" [dataForChild]="dataUser" (submitButton)="eventFromParent($event)"></app-button>
-  <app-button [buttonLabel]="labelButton2" [dataForChild]="dataUser" (submitButton)="eventFromParent2($event)"></app-button>
-</div>
+<button (click)="onSubmit()">click</button>
+<div class="shown" *ngIf="isShown;else shownFalse">muncul</div>
+<div class="shown" *ngIf="!isShown">muncul ketika false</div>
+<ng-template #shownFalse>
+  <p>false untuk ng template</p>
+</ng-template>
+<p [ngStyle]="{color: isShown ? 'green' : 'red'}">Default</p>
 
-<form [formGroup]="addUserForm" (ngSubmit)="onSubmit()">
-  <label for="name">Input your name</label>
-  <input id="name" formControlName="name"/>
-  <div class="validation-error" *ngIf="nameForm?.errors?.['required']">
-    Please input your name
-  </div>
-  <label for="phoneNumber">Input your phone number</label>
-  <input id="phoneNumber" formControlName="phoneNumber"/>
-  <div class="validation-error" *ngIf="phoneNumberForm?.errors?.['minlength']">
-    character must be at least 9 digit
-  </div>
-  <div class="validation-error" *ngIf="phoneNumberForm?.errors?.['maxlength']">
-    character must be at max 13 digit
-  </div>
-  <button type="submit" [disabled]="addUserForm.invalid">Submit</button>
-</form>
+<ul>
+  <li *ngFor="let data of dataUser.address">
+    {{data.city}}
+    {{data.district}}
+    {{data.province}}
+    <div [ngSwitch]="data.zone">
+      <div *ngSwitchCase="1" [ngStyle]="{color: data.zone === 1 ? 'red' :  'yellow'}">output1</div>
+      <div *ngSwitchCase="2" [ngClass]="{'zone-safe': data.zone === 2}">output2</div>
+      <div *ngSwitchCase="3" [ngClass]="data.zone === 3 ? 'zone-green' : 'zone-safe'">output3</div>
+      <div *ngSwitchDefault>output</div>
+    </div>
+  </li>
+</ul>
 
-<div class="cart">
-  <h2 class="title">{{title}}</h2>
-  <p class="desc">{{dataUser.address[0].province}}</p>
-</div>
+<p>{{'12' | currency:'USD'}}</p>
+<p>{{'bryan' | reserve | uppercase}}</p>
+<p>{{'bryan' | uppercase}}</p>
+<p>{{'bryan' | lowercase}}</p>
+<p>{{today | date}}</p>

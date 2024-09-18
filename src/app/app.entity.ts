@@ -5,6 +5,7 @@ export interface DataUser {
 }
 
 interface Address {
+    zone?: number;
     zipcode?: number;
     district: string;
     city: string;
