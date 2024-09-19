@@ -1,21 +1,15 @@
 import { DataUser } from "./app.entity";
 
 export const userDataPublic: DataUser = {
-    name:  'John',
-    age:  30,
-    address: [
-        {
-            zipcode: 1,
-            province: 'Banten',
-            city: 'Tangerang',
-            district:  'Tangerang Selatan',
-            zone: 1
-        },
-        {
-            province: 'DKI Jakarta',
-            city: 'Jakarta',
-            district:  'Jakarta Selatan',
-            zone: 2
-        }
-    ]
+        "paymentDeadline": new Date(),
+        "username": "Janessa25",
+        "name": "Raoul",
+        "email": "Laisha.Kutch36@yahoo.com",
+        "basicSalary": "949883087",
+        "city": "Hammesworth",
+        "province": "Mongolia",
+        "zipcode": "TC",
+        "isChecked": false,
+        "age": 93,
+        "id": "38"
 }

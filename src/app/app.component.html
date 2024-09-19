@@ -6,17 +6,20 @@
 </ng-template>
 <p [ngStyle]="{color: isShown ? 'green' : 'red'}">Default</p>
 
+<div *ngIf="!isLoading">Loading</div>
+<button (click)="createUser()">create user</button>
 <ul>
-  <li *ngFor="let data of dataUser.address">
+  <li *ngFor="let data of dataUser">
     {{data.city}}
-    {{data.district}}
+    {{data.age}}
     {{data.province}}
-    <div [ngSwitch]="data.zone">
-      <div *ngSwitchCase="1" [ngStyle]="{color: data.zone === 1 ? 'red' :  'yellow'}">output1</div>
-      <div *ngSwitchCase="2" [ngClass]="{'zone-safe': data.zone === 2}">output2</div>
-      <div *ngSwitchCase="3" [ngClass]="data.zone === 3 ? 'zone-green' : 'zone-safe'">output3</div>
-      <div *ngSwitchDefault>output</div>
-    </div>
+    {{data.basicSalary}}
+    {{data.email}}
+    {{data.isChecked}}
+    {{data.id}}
+    {{data.paymentDeadline}}
+    {{data.username}}
+    {{data.zipcode}}
   </li>
 </ul>
 

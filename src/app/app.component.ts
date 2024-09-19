@@ -5,8 +5,9 @@ import { CommonModule } from '@angular/common';
 import { ButtonComponent } from './button/button.component';
 import { FormControl, FormGroup, FormsModule, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ReservePipe } from './pipe/reverse.pipe';
-import { GenerateRandomIdService } from './service/generate-random-id/generate-random-id.service';
-import { UserdataService } from './service/userdata/userdata.service';
+import { GenerateRandomIdService } from './Service/generate-random-id/generate-random-id.service';
+import { UserdataService } from './Service/userdata/userdata.service';
+import { HttpRequestService } from './Service/http-service/http-request.service';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +18,7 @@ import { UserdataService } from './service/userdata/userdata.service';
 })
 export class AppComponent implements OnInit{
   title:string = 'fif-angular-mt';
-  dataUser!: DataUser;
+  dataUser!: DataUser[];
   randomId: string = "";
   labelButton1: string = "ini dari parent 1";
   labelButton2: string = "ini dari parent 2";
@@ -27,17 +28,46 @@ export class AppComponent implements OnInit{
   addUserForm!: FormGroup;
   isShown: boolean = false;
   today = new Date();
-
+  apiUrl: string = "https://6580f9853dfdd1b11c424344.mockapi.io/rakamin/employee"
+  isLoading!: boolean;
 
   constructor(
     private randomIdService: GenerateRandomIdService,
-    private userDataService: UserdataService
+    private userDataService: UserdataService,
+    private httpRequestService: HttpRequestService
   ){
     this.randomId = this.randomIdService.generateId();
     this.addUserForm = new FormGroup({
       name:  new FormControl('', Validators.required),
       phoneNumber: new FormControl('', [Validators.required, Validators.minLength(9), Validators.maxLength(13)])
     })
+  }
+  
+  ngOnInit(): void{
+    this.title = 'test fif angular';
+    // this.dataUser = this.userDataService.getUser()
+    this.fetchDataUser();
+  }
+
+  fetchDataUser(){
+    this.isLoading =  true;
+    this.httpRequestService.getData().subscribe((res:any) => {this.isLoading = false;this.dataUser = res;}, (err) => {this.isLoading = false;console.log(err)});
+  }
+
+  createUser(){
+    const payload={
+      "paymentDeadline": new Date(),
+      "username": "Janessa25",
+      "name": "Raoul",
+      "email": "Laisha.Kutch36@yahoo.com",
+      "basicSalary": "949883087",
+      "city": "Hammesworth",
+      "province": "Mongolia",
+      "zipcode": "TC",
+      "isChecked": false,
+      "age": 93
+    }
+    this.httpRequestService.createUser(payload).subscribe((res:any)=>{console.log("Success create user", res)})
   }
 
   @HostListener('mouseenter') onMouseEnter(){
@@ -48,10 +78,6 @@ export class AppComponent implements OnInit{
     this.fontColor = "red"
   }
   
-  ngOnInit(): void{
-    this.title = 'test fif angular';
-    this.dataUser = this.userDataService.getUser()
-  }
 
   eventFromParent(event: any){
     this.labelButton2 = event;
