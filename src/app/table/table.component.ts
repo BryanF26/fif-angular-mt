@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { DataUser } from '../app.entity';
 import { UserdataService } from '../service/userdata/userdata.service';
 import { FormsModule } from '@angular/forms';
@@ -14,6 +14,7 @@ import { SnackBarService } from '../service/snack-bar/snack-bar.service';
 })
 export class TableComponent {
   @Input() dataTable!: Array<DataUser>;
+  @Output() idDelete = new EventEmitter<string>();
 
   constructor(
     // private userDataService: UserdataService,
@@ -22,6 +23,7 @@ export class TableComponent {
 
   deleteData(event:any){
   //   this.userDataService.deleteData(event);
+    this.idDelete.emit(event);
     this.trigger('Delete Successed', 'Okay')
   }
 

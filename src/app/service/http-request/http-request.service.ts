@@ -20,4 +20,8 @@ export class HttpRequestService {
   createUser(payload:DataUser){
     return this.httpClient.post(this.apiUrl, payload)
   }
+
+  deleteUser(id:string){
+    return this.httpClient.delete(`${this.apiUrl}/${id}`)
+  }
 }

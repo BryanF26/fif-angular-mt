@@ -39,6 +39,15 @@ export class AppComponent implements OnInit{
     );
   }
 
+  deleteUser(event: any){
+    this.httpRequestService.deleteUser(event).subscribe(
+      (res:any)=>{
+        console.log("Success delete user", res);
+        this.fetchDataUser()
+      }
+    );
+  }
+
   fetchDataUser(){
     this.isLoading =  true;
     this.httpRequestService.getData().subscribe((res:any) => {this.isLoading = false;console.log(res);this.dataUser = res;}, (err) => {this.isLoading = false;console.log(err)});
