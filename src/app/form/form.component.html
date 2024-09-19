@@ -57,6 +57,30 @@
             </div>
         </div>
         <br>
+        <div class="form-age">
+            <div>Age:</div>
+            <input id="age" type="number" formControlName="age" placeholder="Input your age"/>
+            <div class="validation-error" *ngIf="ageForm?.errors?.['required']">
+                age must be required
+            </div>
+        </div>
+        <br>
+        <div class="form-basic-salary">
+            <div>Basic Salary:</div>
+            <input id="basicSalary" type="text" formControlName="basicSalary" placeholder="Input your basic salary"/>
+            <div class="validation-error" *ngIf="basicSalaryForm?.errors?.['required']">
+                basic salary must be required
+            </div>
+        </div>
+        <br>
+        <div class="form-username">
+            <div>Username:</div>
+            <input id="username" type="text" formControlName="username" placeholder="Input your username"/>
+            <div class="validation-error" *ngIf="usernameForm?.errors?.['required']">
+                username must be required
+            </div>
+        </div>
+        <br>
         <div class="button">
             <button type="submit" [disabled]="addUserForm.invalid">Submit</button>
         </div>

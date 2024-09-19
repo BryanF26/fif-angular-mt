@@ -23,6 +23,9 @@ export class FormComponent{
       province: new FormControl('', Validators.required),
       zipCode: new FormControl(0, Validators.required),
       paymentDeadline: new FormControl(new Date(), Validators.required),
+      age: new FormControl(0, Validators.required),
+      basicSalary: new FormControl('', Validators.required),
+      username: new FormControl('', Validators.required),
     })
   }
 
@@ -30,13 +33,14 @@ export class FormComponent{
     this.dataUser = {
       name: this.addUserForm.get('name')?.value,
       email: this.addUserForm.get('email')?.value,
-      address: {
-        province: this.addUserForm.get('province')?.value,
-        city: this.addUserForm.get('city')?.value,
-        zipCode: this.addUserForm.get('zipCode')?.value
-      },
+      province: this.addUserForm.get('province')?.value,
+      city: this.addUserForm.get('city')?.value,
+      zipcode: this.addUserForm.get('zipCode')?.value,
       paymentDeadline: new Date(this.addUserForm.get('paymentDeadline')?.value),
-      isCompleted: false
+      isChecked: false,
+      age: this.addUserForm.get('age')?.value,
+      basicSalary:  this.addUserForm.get('basicSalary')?.value,
+      username:  this.addUserForm.get('username')?.value
     };
     this.submitButton.emit(this.dataUser);
   }
@@ -63,6 +67,18 @@ export class FormComponent{
   
   get paymentDeadlineForm(){
     return this.addUserForm.get('paymentDeadline');
+  }
+  
+  get ageForm(){
+    return this.addUserForm.get('age');
+  }
+  
+  get basicSalaryForm(){
+    return this.addUserForm.get('basicSalary');
+  }
+  
+  get usernameForm(){
+    return this.addUserForm.get('username');
   }
   
 }

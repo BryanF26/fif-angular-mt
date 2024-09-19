@@ -1,30 +1,30 @@
 import { Injectable } from '@angular/core';
-import { userDataPublic } from '../user.data';
+// import { userDataPublic } from '../user.data';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserdataService {
 
-  userData = userDataPublic;
+//   userData = userDataPublic;
   currentDate:  Date = new Date();
 
   constructor() { }
 
   initData(){
-    return this.userData;
+    // return this.userData;
   }
 
   pushData(event:any){
-    this.userData.push(event);
+    // this.userData.push(event);
   }
 
   deleteData(event:any){
-    this.userData.splice(event, 1);
+    // this.userData.splice(event, 1);
   }
 
   checkCompleted(idx:number, event:any){
-    this.userData[idx].isCompleted = event;
+    // this.userData[idx].isCompleted = event;
   }
 
   checkDeadline(event:any){
