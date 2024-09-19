@@ -1,7 +1,8 @@
 <div class="title">
     <h1>Form Input Table</h1>
+    <div *ngIf="isLoading" class="loading-container">Loading</div>
 </div>
-<div class="form">
+<div class="form" *ngIf="!isLoading">
     <form [formGroup]="addUserForm" (ngSubmit)="onSubmit()">
         <div class="form-name">
             <div>Name:</div>
@@ -13,7 +14,6 @@
                 character min 3
             </div>
         </div>
-        <br>
         <div class="form-email">
             <div>Email:</div>
             <input id="email" formControlName="email" placeholder="Input your email"/>
@@ -24,7 +24,6 @@
                 email must valid
             </div>
         </div>
-        <br>
         <div class="form-city">
             <div>City:</div>
             <input id="city" formControlName="city" placeholder="Input your city"/>
@@ -32,7 +31,6 @@
                 city must be required
             </div>
         </div>
-        <br>
         <div class="form-province">
             <div>Province:</div>
             <input id="province" formControlName="province" placeholder="Input your province"/>
@@ -40,7 +38,6 @@
                 province must be required
             </div>
         </div>
-        <br>
         <div class="form-zip-code">
             <div>Zip Code:</div>
             <input id="zipCode" type="text" formControlName="zipCode" placeholder="Input your zip code"/>
@@ -48,7 +45,6 @@
                 zip code must be required
             </div>
         </div>
-        <br>
         <div class="form-payment-deadline">
             <div>Payment Deadline:</div>
             <input id="paymentDeadline" type="date" formControlName="paymentDeadline" placeholder="Input your payment deadline"/>
@@ -56,7 +52,6 @@
                 payment deadline must be required
             </div>
         </div>
-        <br>
         <div class="form-age">
             <div>Age:</div>
             <input id="age" type="number" formControlName="age" placeholder="Input your age"/>
@@ -64,7 +59,6 @@
                 age must be required
             </div>
         </div>
-        <br>
         <div class="form-basic-salary">
             <div>Basic Salary:</div>
             <input id="basicSalary" type="text" formControlName="basicSalary" placeholder="Input your basic salary"/>
@@ -72,7 +66,6 @@
                 basic salary must be required
             </div>
         </div>
-        <br>
         <div class="form-username">
             <div>Username:</div>
             <input id="username" type="text" formControlName="username" placeholder="Input your username"/>
@@ -80,10 +73,8 @@
                 username must be required
             </div>
         </div>
-        <br>
         <div class="button">
             <button type="submit" [disabled]="addUserForm.invalid">Submit</button>
         </div>
     </form>
 </div>
-<br><br>

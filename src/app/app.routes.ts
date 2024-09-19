@@ -6,6 +6,6 @@ import { FormComponent } from './pages/form/form.component';
 export const routes: Routes = [
     {path: '',  component: TableComponent},
     {path: 'detail/:id/:methode', component: FormComponent},
-    {path: '404', component: NotFoundComponent},
-    {path: '**', redirectTo:'404', pathMatch:'full'}
+    {path: 'error', component: NotFoundComponent},
+    {path: '**', redirectTo:'error', pathMatch:'full'}
 ];

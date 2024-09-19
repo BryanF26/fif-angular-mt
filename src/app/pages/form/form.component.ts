@@ -1,8 +1,8 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DataUser } from '../../app.entity';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Route, Router} from '@angular/router';
+import { ActivatedRoute, Router} from '@angular/router';
 import { HttpRequestService } from '../../service/http-request/http-request.service';
 
 
@@ -18,8 +18,7 @@ export class FormComponent implements OnInit{
   dataUser!: DataUser;
   idUrl: string | null = null;
   methodeUrl: string | null = null;
-  isLoading!: boolean;
-  // @Output() submitButton = new EventEmitter<DataUser>();
+  isLoading: boolean = true;
 
   constructor(
     private router:Router,
@@ -39,68 +38,106 @@ export class FormComponent implements OnInit{
     });
     this.idUrl = this.activatedRoute.snapshot.paramMap.get('id')
     this.methodeUrl = this.activatedRoute.snapshot.paramMap.get('methode')
-    if(this.methodeUrl === "put"){
-      
+    if(this.methodeUrl !== "put" &&  this.methodeUrl !== "add"){
+      this.router.navigate(['/error'])
+    } if(this.methodeUrl === "add" &&  this.idUrl !== "0"){
+      this.router.navigate(['/error'])
     }
-    
-    // this.activatedRoute.queryParams.subscribe(params => console.log(params))
-    // console.log(this.idUrl)
-    // console.log(this.methodeUrl)
-
   }
 
   ngOnInit(): void {
-      this.fetchDataUser()
+    this.fetchDataUser()
   }
 
   createUser(event: any){
     this.httpRequestService.createData(event).subscribe(
       (res:any)=>{
         console.log("Success create user", res);
+      }, (err) => {
+        console.log(err)
+        this.goToHomeError()
+      }
+    );
+  }
+
+  fetchAllDataUser(){
+    this.isLoading =  true;
+    this.httpRequestService.getData().subscribe((res:any) => {
+        this.isLoading = false;
+        console.log(res);
+      }, (err) => {
+        this.isLoading = false;
+        console.log(err)
+        this.goToHomeError()
       }
     );
   }
 
   fetchDataUser(){
-    this.isLoading =  true;
-    this.httpRequestService.getDataById(this.idUrl).subscribe((res:any) => {
+    if(this.methodeUrl === "put"){
+      this.isLoading =  true;
+      this.httpRequestService.getDataById(this.idUrl).subscribe((res:any)=>{
+        this.isLoading = false;
+        console.log(res);
+        this.nameForm?.setValue(res.name)
+        this.emailForm?.setValue(res.email)
+        this.cityForm?.setValue(res.city)
+        this.provinceForm?.setValue(res.province)
+        this.zipCodeForm?.setValue(res.zipcode)
+        const date = new Date(res.paymentDeadline);
+        this.paymentDeadlineForm?.setValue(`${date.getFullYear()}-${('0' + (date.getMonth() + 1)).slice(-2)}-${('0' + date.getDate()).slice(-2)}`);
+        this.ageForm?.setValue(res.age)
+        this.basicSalaryForm?.setValue(res.basicSalary)
+        this.usernameForm?.setValue(res.username)
+        this.dataUser = res
+      }, (err) => {
+        this.isLoading = false;
+        console.log(err)
+        this.goToHomeError()
+      });
+    } else if(this.methodeUrl === "add"){
       this.isLoading = false;
-      console.log(res);
-      this.nameForm?.setValue(res.name)
-      this.emailForm?.setValue(res.email)
-      this.cityForm?.setValue(res.city)
-      this.provinceForm?.setValue(res.paymentDeadline)
-      this.zipCodeForm?.setValue(res.zipcode)
-      this.paymentDeadlineForm?.setValue(res.paymentDeadline)
-      this.ageForm?.setValue(res.age)
-      this.basicSalaryForm?.setValue(res.basicSalary)
-      this.usernameForm?.setValue(res.username)
-    }, (err) => {
-      this.isLoading = false;console.log(err)}
-    );
+    }
   }
 
   onSubmit(){
+    const temp:any = this.idUrl;
     this.dataUser = {
+      id: (this.dataUser === undefined) ?  null : temp,
       name: this.addUserForm.get('name')?.value,
       email: this.addUserForm.get('email')?.value,
       province: this.addUserForm.get('province')?.value,
       city: this.addUserForm.get('city')?.value,
       zipcode: this.addUserForm.get('zipCode')?.value,
       paymentDeadline: new Date(this.addUserForm.get('paymentDeadline')?.value),
-      isChecked: false,
+      isChecked: (this.dataUser === undefined) ?  false : this.dataUser.isChecked,
       age: this.addUserForm.get('age')?.value,
       basicSalary:  this.addUserForm.get('basicSalary')?.value,
       username:  this.addUserForm.get('username')?.value
     };
     console.log(this.dataUser)
-    this.httpRequestService.editData(this.idUrl, this.dataUser)
+    if(this.methodeUrl === "put"){
+      this.httpRequestService.editData(this.idUrl, this.dataUser).subscribe(
+        (res:any)=>{
+          console.log("Success update user", res);
+        }, (err) => {
+          console.log(err)
+          this.goToHomeError()
+        }
+      );
+    } else if(this.methodeUrl === "add"){
+      this.createUser(this.dataUser)
+    }
     this.goToHome()
-    // this.submitButton.emit(this.dataUser);
   }
 
   goToHome(){
+    this.fetchAllDataUser()
     this.router.navigate(['']);
+  }
+  
+  goToHomeError(){
+    this.router.navigate([''], {queryParams:{error:true}});
   }
 
   get nameForm(){

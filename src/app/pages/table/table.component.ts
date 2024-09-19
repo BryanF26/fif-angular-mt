@@ -1,11 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DataUser } from '../../app.entity';
-import { UserdataService } from '../../service/userdata/userdata.service';
 import { FormsModule } from '@angular/forms';
 import { SnackBarService } from '../../service/snack-bar/snack-bar.service';
 import { HttpRequestService } from '../../service/http-request/http-request.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-table',
@@ -19,14 +18,20 @@ export class TableComponent implements OnInit{
   dataTable!: DataUser[];
   isLoading! : boolean;
   url!: string;
+  isError!: boolean;
+  currentDate:  Date = new Date();
 
   constructor(
-    // private userDataService: UserdataService,
     private snackBService:SnackBarService,
     private httpRequestService: HttpRequestService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
 
-  ){}
+  ){
+    this.route.queryParams.subscribe(params => {
+      this.isError = params['error'];
+    });
+  }
 
   ngOnInit(): void {
     this.fetchDataUser();
@@ -34,19 +39,24 @@ export class TableComponent implements OnInit{
 
   fetchDataUser(){
     this.isLoading =  true;
-    this.httpRequestService.getData().subscribe((res:any) => {this.isLoading = false;console.log(res);this.dataTable = res;}, (err) => {this.isLoading = false;console.log(err)});
+    this.httpRequestService.getData().subscribe((res:any) => {
+        this.isLoading = false;
+        console.log(res);this.dataTable = res;
+      }, (err) => {
+        this.isLoading = false;
+        console.log(err)
+        this.goToHomeError()
+      }
+    );
   }
 
-  // deleteData(event:any){
-  // //   this.userDataService.deleteData(event);
-  //   this.idDelete.emit(event);
-  //   this.trigger('Delete Successed', 'Okay')
-  // }
   deleteData(event: any){
-    this.httpRequestService.deleteData(event).subscribe(
-      (res:any)=>{
+    this.httpRequestService.deleteData(event).subscribe((res:any)=>{
         this.trigger('Delete Successed', 'Okay')
         this.fetchDataUser()
+      }, (err) => {
+        console.log(err)
+        this.goToHomeError()
       }
     );
   }
@@ -61,15 +71,28 @@ export class TableComponent implements OnInit{
   }
 
   isDeadline(event:any){
-  //   return this.userDataService.checkDeadline(event)
+    let date = new Date(event);
+    return Math.floor((Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()) - Date.UTC(this.currentDate.getFullYear(), this.currentDate.getMonth(), this.currentDate.getDate()) ) /(1000 * 60 * 60 * 24)) <= 3;
   }
 
-  checkCompleted(idx:number, event:any){
-  //   this.userDataService.checkCompleted(idx, event)
+  checkCompleted(idx:any, event:any){
+    event.isChecked = event.isChecked
+    this.httpRequestService.editData(idx, event).subscribe(
+      (res:any)=>{
+        console.log("Success update user", res);
+      }, (err) => {
+        console.log(err)
+        this.goToHomeError()
+      }
+    );
   }
 
   trigger(message:string, action:string) 
   { 
     this.snackBService.openSnackBar(message, action); 
   } 
+
+  goToHomeError(){
+    this.router.navigate([''], {queryParams:{error:true}});
+  }
 }

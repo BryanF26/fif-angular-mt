@@ -1,9 +1,98 @@
-.title, .form, .button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.form {
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    max-width: 500px;
+    margin: auto;
+    background-color: #f9f9f9;
 }
 
-.validation-error{
+.title {
+    
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    margin-bottom: 20px;
+
+    h1 {
+        color: #333;
+    }
+}
+
+div[ngIf="isLoading"] {
+    font-size: 18px;
+    color: #888;
+}
+
+// Input field styling
+input {
+    width: 100%;
+    padding: 10px;
+    margin: 5px -10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+
+    &:focus {
+        outline: none;
+        border-color: #3498db;
+        box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+    }
+}
+
+// Error message styling
+.validation-error {
     color: red;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.form-name, .form-email, .form-city, .form-province, .form-zip-code, 
+.form-payment-deadline, .form-age, .form-basic-salary, .form-username {
+    margin-bottom: 20px;
+
+    div {
+        font-size: 16px;
+        color: #555;
+        margin-bottom: 5px;
+    }
+}
+
+// Button styling
+.button {
+    text-align: center;
+
+    button {
+        padding: 10px 20px;
+        background-color: #3498db;
+        color: white;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        
+        &:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+        }
+
+        &:hover:not(:disabled) {
+            background-color: #2980b9;
+        }
+    }
+}
+
+.loading-container {
+    height: 100px;
+    width: 100px;
+    border: 6px solid rgba(0, 0, 0, 0.1);
+    border-top-color: #3498db;
+    border-radius: 50%;
+    animation: spin 1s ease-in-out infinite;
+    @keyframes spin {
+        to {
+        transform: rotate(360deg);
+        }
+    }
 }

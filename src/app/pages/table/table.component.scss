@@ -1,23 +1,131 @@
-td, th {
-    border: 1px solid #dddddd;
-    text-align: center;
-    padding: 8px;
+.title{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+    h1 {
+        color: #333;
+    }
+}
+
+div[ngIf="isLoading"] {
+    font-size: 18px;
+    color: #888;
 }
 
 .table {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
+    width: 100%;
+    margin: 20px 0;
+
+    h3 {
+        color: #f44336;
+    }
+
+    .add-button {
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        margin-bottom: 30px;
+
+        &:hover {
+        background-color: #45a049;
+        }
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+
+        thead {
+        background-color: #f2f2f2;
+
+        th {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 2px solid #ddd;
+            font-size: 14px;
+            color: #333;
+        }
+        }
+
+        tbody {
+            tr {
+                &:hover {
+                background-color: #f1f1f1;
+                }
+
+                td {
+                padding: 10px;
+                border-bottom: 1px solid #ddd;
+                font-size: 14px;
+                color: #333;
+                cursor: pointer;
+
+                &:nth-child(12) {
+                    text-align: center;
+                }
+                }
+            }
+        }
+
+        .no-data {
+            font-size: 16px;
+            color: #888;
+            text-align: center;
+        }
+    }
 }
 
-.title{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.delete-button {
+    a {
+        display: inline-block;
+        cursor: pointer;
+
+        img {
+        width: 20px;
+        height: 20px;
+
+        &:hover {
+            filter: brightness(1.2);
+        }
+        }
+    }
 }
 
-.add-button{
-    margin-bottom: 10px;
+.check-button {
+    input {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+tr[ngStyle] {
+    &.checked {
+        text-decoration: line-through;
+        color: #888;
+    }
+}
+
+.loading-container {
+    height: 100px;
+    width: 100px;
+    border: 6px solid rgba(0, 0, 0, 0.1);
+    border-top-color: #3498db;
+    border-radius: 50%;
+    animation: spin 1s ease-in-out infinite;
+    @keyframes spin {
+        to {
+        transform: rotate(360deg);
+        }
+    }
 }

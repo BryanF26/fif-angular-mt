@@ -1,51 +1,55 @@
 <div class="title">
   <h1>Table</h1>
+  <div *ngIf="isLoading" class="loading-container">
+    Loading
+  </div>
+</div>  
+<div class="table" *ngIf="!isLoading">
   <button (click)="addData()" class="add-button">Add</button>
-</div>
-<div class="table">
-    <table>
-      <thead>
-        <tr>
-          <th>No.</th>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Username</th>
-          <th>Email</th>
-          <th>Age</th>
-          <th>Basic Salary</th>
-          <th>City</th>
-          <th>Province</th>
-          <th>Zip Code</th>
-          <th>Payment Deadline</th>
-          <th>Action</th>
-          <th>Completed</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of dataTable,  let idx = index" 
-        [ngStyle]="{
-          'text-decoration':item.isChecked?'line-through':''}">
-          <!-- , 'backgroundColor':isDeadline(item.paymentDeadline)?'red':''
-          , 'color':isDeadline(item.paymentDeadline)?'white':'black'}"> -->
-          <td (click)="goToDetail(item.id)">{{idx+1}}</td>
-          <td (click)="goToDetail(item.id)">{{item.id}}</td>
-          <td (click)="goToDetail(item.id)">{{item.name}}</td>
-          <td (click)="goToDetail(item.id)">{{item.username}}</td>
-          <td (click)="goToDetail(item.id)">{{item.email}}</td>
-          <td (click)="goToDetail(item.id)">{{item.age}}</td>
-          <td (click)="goToDetail(item.id)">{{item.basicSalary}}</td>
-          <td (click)="goToDetail(item.id)">{{item.city}}</td>
-          <td (click)="goToDetail(item.id)">{{item.province}}</td>
-          <td (click)="goToDetail(item.id)">{{item.zipcode}}</td>
-          <td (click)="goToDetail(item.id)">{{item.paymentDeadline |  date}}</td>
-          <td class="delete-button">
-            <a (click)="deleteData(item.id);">
-              <img src="https://img.icons8.com/?size=48&id=7837&format=png" width="20" height="20">
-            </a>
-          </td>
-          <td class="check-button"><input type="checkbox" [(ngModel)]="item.isChecked" (change)="checkCompleted(idx, item.isChecked)"></td>
-        </tr>
-      </tbody>
-    </table>
-    <!-- <p class="no-data" *ngIf="dataTable.length===0">There is no data</p> -->
+  <h3 *ngIf="isError">There is a mistake, Try Again!</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>No.</th>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Age</th>
+        <th>Basic Salary</th>
+        <th>City</th>
+        <th>Province</th>
+        <th>Zip Code</th>
+        <th>Payment Deadline</th>
+        <th>Action</th>
+        <th>Completed</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of dataTable,  let idx = index" 
+      [ngStyle]="{
+        'text-decoration':item.isChecked?'line-through':''
+        , 'backgroundColor':isDeadline(item.paymentDeadline)?'red':''
+        , 'color':isDeadline(item.paymentDeadline)?'white':'black'}">
+        <td (click)="goToDetail(item.id)">{{idx+1}}</td>
+        <td (click)="goToDetail(item.id)">{{item.id}}</td>
+        <td (click)="goToDetail(item.id)">{{item.name}}</td>
+        <td (click)="goToDetail(item.id)">{{item.username}}</td>
+        <td (click)="goToDetail(item.id)">{{item.email}}</td>
+        <td (click)="goToDetail(item.id)">{{item.age}}</td>
+        <td (click)="goToDetail(item.id)">{{item.basicSalary}}</td>
+        <td (click)="goToDetail(item.id)">{{item.city}}</td>
+        <td (click)="goToDetail(item.id)">{{item.province}}</td>
+        <td (click)="goToDetail(item.id)">{{item.zipcode}}</td>
+        <td (click)="goToDetail(item.id)">{{item.paymentDeadline |  date}}</td>
+        <td class="delete-button">
+          <a (click)="deleteData(item.id);">
+            <img src="https://img.icons8.com/?size=48&id=7837&format=png" width="20" height="20">
+          </a>
+        </td>
+        <td class="check-button"><input type="checkbox" [(ngModel)]="item.isChecked" (change)="checkCompleted(item.id, item)"></td>
+      </tr>
+    </tbody>
+  </table>
+  <!-- <p class="no-data" *ngIf="dataTable.length===0">There is no data</p> -->
 </div>
