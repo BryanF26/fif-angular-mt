@@ -1,0 +1,30 @@
+<button (click)="onSubmit()">click</button>
+<div class="shown" *ngIf="isShown;else shownFalse">muncul</div>
+<div class="shown" *ngIf="!isShown">muncul ketika false</div>
+<ng-template #shownFalse>
+  <p>false untuk ng template</p>
+</ng-template>
+<p [ngStyle]="{color: isShown ? 'green' : 'red'}">Default</p>
+
+<div *ngIf="!isLoading">Loading</div>
+<button (click)="createUser()">create user</button>
+<ul>
+  <li *ngFor="let data of dataUser">
+    {{data.city}}
+    {{data.age}}
+    {{data.province}}
+    {{data.basicSalary}}
+    {{data.email}}
+    {{data.isChecked}}
+    {{data.id}}
+    {{data.paymentDeadline}}
+    {{data.username}}
+    {{data.zipcode}}
+  </li>
+</ul>
+
+<p>{{'12' | currency:'USD'}}</p>
+<p>{{'bryan' | reserve | uppercase}}</p>
+<p>{{'bryan' | uppercase}}</p>
+<p>{{'bryan' | lowercase}}</p>
+<p>{{today | date}}</p>
