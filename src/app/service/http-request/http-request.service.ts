@@ -17,11 +17,20 @@ export class HttpRequestService {
     return this.httpClient.get(this.apiUrl)
   }
 
-  createUser(payload:DataUser){
+  getDataById(id:any){
+    return this.httpClient.get(this.apiUrl + '/' + id)
+  }
+
+  createData(payload:DataUser){
     return this.httpClient.post(this.apiUrl, payload)
   }
 
-  deleteUser(id:string){
+  deleteData(id:string){
     return this.httpClient.delete(`${this.apiUrl}/${id}`)
+  }
+
+  editData(id:any,  payload:DataUser){
+
+    return this.httpClient.put(`${this.apiUrl}/${id}`, payload)
   }
 }

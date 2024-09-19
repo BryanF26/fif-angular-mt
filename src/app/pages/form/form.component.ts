@@ -1,7 +1,10 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { DataUser } from '../app.entity';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { DataUser } from '../../app.entity';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute, Route, Router} from '@angular/router';
+import { HttpRequestService } from '../../service/http-request/http-request.service';
+
 
 @Component({
   selector: 'app-form',
@@ -10,12 +13,19 @@ import { CommonModule } from '@angular/common';
   templateUrl: './form.component.html',
   styleUrl: './form.component.scss'
 })
-export class FormComponent{
+export class FormComponent implements OnInit{
   addUserForm!: FormGroup;
   dataUser!: DataUser;
-  @Output() submitButton = new EventEmitter<DataUser>();
+  idUrl: string | null = null;
+  methodeUrl: string | null = null;
+  isLoading!: boolean;
+  // @Output() submitButton = new EventEmitter<DataUser>();
 
-  constructor(){
+  constructor(
+    private router:Router,
+    private activatedRoute: ActivatedRoute,
+    private httpRequestService: HttpRequestService
+  ){
     this.addUserForm = new FormGroup({
       name:  new FormControl('', [Validators.required,  Validators.minLength(3)]),
       email: new FormControl('', [Validators.required, Validators.email]),
@@ -26,7 +36,48 @@ export class FormComponent{
       age: new FormControl(0, Validators.required),
       basicSalary: new FormControl('', Validators.required),
       username: new FormControl('', Validators.required),
-    })
+    });
+    this.idUrl = this.activatedRoute.snapshot.paramMap.get('id')
+    this.methodeUrl = this.activatedRoute.snapshot.paramMap.get('methode')
+    if(this.methodeUrl === "put"){
+      
+    }
+    
+    // this.activatedRoute.queryParams.subscribe(params => console.log(params))
+    // console.log(this.idUrl)
+    // console.log(this.methodeUrl)
+
+  }
+
+  ngOnInit(): void {
+      this.fetchDataUser()
+  }
+
+  createUser(event: any){
+    this.httpRequestService.createData(event).subscribe(
+      (res:any)=>{
+        console.log("Success create user", res);
+      }
+    );
+  }
+
+  fetchDataUser(){
+    this.isLoading =  true;
+    this.httpRequestService.getDataById(this.idUrl).subscribe((res:any) => {
+      this.isLoading = false;
+      console.log(res);
+      this.nameForm?.setValue(res.name)
+      this.emailForm?.setValue(res.email)
+      this.cityForm?.setValue(res.city)
+      this.provinceForm?.setValue(res.paymentDeadline)
+      this.zipCodeForm?.setValue(res.zipcode)
+      this.paymentDeadlineForm?.setValue(res.paymentDeadline)
+      this.ageForm?.setValue(res.age)
+      this.basicSalaryForm?.setValue(res.basicSalary)
+      this.usernameForm?.setValue(res.username)
+    }, (err) => {
+      this.isLoading = false;console.log(err)}
+    );
   }
 
   onSubmit(){
@@ -42,7 +93,14 @@ export class FormComponent{
       basicSalary:  this.addUserForm.get('basicSalary')?.value,
       username:  this.addUserForm.get('username')?.value
     };
-    this.submitButton.emit(this.dataUser);
+    console.log(this.dataUser)
+    this.httpRequestService.editData(this.idUrl, this.dataUser)
+    this.goToHome()
+    // this.submitButton.emit(this.dataUser);
+  }
+
+  goToHome(){
+    this.router.navigate(['']);
   }
 
   get nameForm(){

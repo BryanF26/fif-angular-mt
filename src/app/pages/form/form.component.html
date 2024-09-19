@@ -43,7 +43,7 @@
         <br>
         <div class="form-zip-code">
             <div>Zip Code:</div>
-            <input id="zipCode" type="number" formControlName="zipCode" placeholder="Input your zip code"/>
+            <input id="zipCode" type="text" formControlName="zipCode" placeholder="Input your zip code"/>
             <div class="validation-error" *ngIf="zipCodeForm?.errors?.['required']">
                 zip code must be required
             </div>

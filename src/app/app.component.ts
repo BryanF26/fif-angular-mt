@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { DataUser } from './app.entity';
-import { FormComponent } from "./form/form.component";
-import { TableComponent } from "./table/table.component";
+// import { FormComponent } from "./pages/form/form.component";
+// import { TableComponent } from "./pages/table/table.component";
 import { HttpRequestService } from './service/http-request/http-request.service';
 // import { UserdataService } from './service/userdata/userdata.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, FormComponent, TableComponent],
+  imports: [RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
@@ -31,7 +31,7 @@ export class AppComponent implements OnInit{
   }
 
   createUser(event: any){
-    this.httpRequestService.createUser(event).subscribe(
+    this.httpRequestService.createData(event).subscribe(
       (res:any)=>{
         console.log("Success create user", res);
         this.fetchDataUser()
@@ -40,7 +40,7 @@ export class AppComponent implements OnInit{
   }
 
   deleteUser(event: any){
-    this.httpRequestService.deleteUser(event).subscribe(
+    this.httpRequestService.deleteData(event).subscribe(
       (res:any)=>{
         console.log("Success delete user", res);
         this.fetchDataUser()

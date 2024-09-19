@@ -10,3 +10,14 @@ td, th {
     justify-content: center;
     align-items: center;
 }
+
+.title{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.add-button{
+    margin-bottom: 10px;
+}
