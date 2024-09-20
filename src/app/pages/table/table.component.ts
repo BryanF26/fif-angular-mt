@@ -76,7 +76,6 @@ export class TableComponent implements OnInit{
   }
 
   checkCompleted(idx:any, event:any){
-    event.isChecked = event.isChecked
     this.httpRequestService.editData(idx, event).subscribe(
       (res:any)=>{
         console.log("Success update user", res);
