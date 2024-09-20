@@ -1,0 +1,44 @@
+.logout-container {
+    display: flex;
+    justify-content: flex-end;
+    padding: 20px; /* Optional: adds some space around the button */
+  }
+  
+  button {
+    padding: 10px 20px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  button:hover {
+    background-color: #c82333;
+    transform: scale(1.05);
+  }
+  
+  button:active {
+    background-color: #bd2130;
+    transform: scale(0.98);
+  }
+  
+  button:focus {
+    outline: none;
+    box-shadow: 0 0 5px #c82333;
+  }
+  
+  @media (max-width: 600px) {
+    .logout-container {
+      justify-content: center; /* Center the button on small screens */
+    }
+    
+    button {
+      width: 100%;
+      padding: 12px;
+      font-size: 14px;
+    }
+  }
+  

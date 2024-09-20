@@ -33,7 +33,10 @@ export class LoginComponent {
 
   onSubmit(){
     this.onLogin();
+  }
 
+  errorMessage(){
+    return !!this.error;
   }
 
 
