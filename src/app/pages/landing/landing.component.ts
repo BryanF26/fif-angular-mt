@@ -3,11 +3,11 @@ import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, FormsModule, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ButtonComponent } from '../../button/button.component';
-import { ReservePipe } from '../../pipe/reverse.pipe';
 import { DataUser } from '../../app.entity';
-import { GenerateRandomIdService } from '../../service/generate-random-id/generate-random-id.service';
-import { UserdataService } from '../../service/userdata/userdata.service';
-import { HttpRequestService } from '../../service/http-service/http-request.service';
+import { ReservePipe } from '../../../pipe/reverse.pipe';
+import { GenerateRandomIdService } from '../../../service/generate-random-id/generate-random-id.service';
+// import { UserdataService } from '../../../service/userdata/userdata.service';
+import { HttpRequestService } from '../../../service/http-service/http-request.service';
 
 @Component({
   selector: 'app-root',
@@ -33,7 +33,7 @@ export class LandingComponent implements OnInit{
 
   constructor(
     private randomIdService: GenerateRandomIdService,
-    private userDataService: UserdataService,
+    // private userDataService: UserdataService,
     private httpRequestService: HttpRequestService
   ){
     this.randomId = this.randomIdService.generateId();

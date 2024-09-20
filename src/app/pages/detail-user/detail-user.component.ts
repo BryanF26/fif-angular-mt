@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ButtonComponent } from "../../button/button.component";
 
 @Component({
   selector: 'app-detail-user',
   standalone: true,
-  imports: [],
+  imports: [ButtonComponent],
   templateUrl: './detail-user.component.html',
   styleUrl: './detail-user.component.scss'
 })
