@@ -3,7 +3,7 @@ import { DataUser } from '../../app.entity';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router} from '@angular/router';
-import { HttpRequestService } from '../../service/http-request/http-request.service';
+import { HttpRequestService } from '../../../service/http-request/http-request.service';
 
 
 @Component({
@@ -65,7 +65,7 @@ export class FormComponent implements OnInit{
     this.httpRequestService.getData().subscribe((res:any) => {
         this.isLoading = false;
         console.log(res);
-      }, (err) => {
+      }, (err:any) => {
         this.isLoading = false;
         console.log(err)
         this.goToHomeError()
@@ -90,7 +90,7 @@ export class FormComponent implements OnInit{
         this.basicSalaryForm?.setValue(res.basicSalary)
         this.usernameForm?.setValue(res.username)
         this.dataUser = res
-      }, (err) => {
+      }, (err:any) => {
         this.isLoading = false;
         console.log(err)
         this.goToHomeError()
@@ -120,7 +120,7 @@ export class FormComponent implements OnInit{
       this.httpRequestService.editData(this.idUrl, this.dataUser).subscribe(
         (res:any)=>{
           console.log("Success update user", res);
-        }, (err) => {
+        }, (err:any) => {
           console.log(err)
           this.goToHomeError()
         }

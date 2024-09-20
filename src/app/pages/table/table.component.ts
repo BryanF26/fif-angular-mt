@@ -2,9 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DataUser } from '../../app.entity';
 import { FormsModule } from '@angular/forms';
-import { SnackBarService } from '../../service/snack-bar/snack-bar.service';
-import { HttpRequestService } from '../../service/http-request/http-request.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { SnackBarService } from '../../../service/snack-bar/snack-bar.service';
+import { HttpRequestService } from '../../../service/http-request/http-request.service';
 
 @Component({
   selector: 'app-table',
@@ -42,7 +42,7 @@ export class TableComponent implements OnInit{
     this.httpRequestService.getData().subscribe((res:any) => {
         this.isLoading = false;
         console.log(res);this.dataTable = res;
-      }, (err) => {
+      }, (err: any) => {
         this.isLoading = false;
         console.log(err)
         this.goToHomeError()
@@ -54,7 +54,7 @@ export class TableComponent implements OnInit{
     this.httpRequestService.deleteData(event).subscribe((res:any)=>{
         this.trigger('Delete Successed', 'Okay')
         this.fetchDataUser()
-      }, (err) => {
+      }, (err: any) => {
         console.log(err)
         this.goToHomeError()
       }
@@ -79,7 +79,7 @@ export class TableComponent implements OnInit{
     this.httpRequestService.editData(idx, event).subscribe(
       (res:any)=>{
         console.log("Success update user", res);
-      }, (err) => {
+      }, (err:any) => {
         console.log(err)
         this.goToHomeError()
       }
